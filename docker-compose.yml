@@ -1,0 +1,36 @@
+version: '3.3'
+
+volumes:
+  mongodb_restaurant:
+
+services:
+  mongo:
+    restart: always
+    image: bitnami/mongodb:4.0
+    env_file:
+      - ./.env.dev
+    volumes:
+      - mongodb_restaurant:/bitnami
+      - ./mongodump:/dump
+    ports:
+      - 44000:27017
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '1m'
+  server:
+    build:
+      dockerfile: ./server/Dockerfile.dev
+      context: ./
+    volumes:
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./node_modules:/app/node_modules
+      - ./server:/app/server
+    ports:
+      - 44001:80
+    restart: always
+    command: /app/node_modules/.bin/ts-node-dev --transpile-only /app/server/index.ts
+    # command: tail -f /dev/null
+    env_file:
+      - ./.env.dev
+  
