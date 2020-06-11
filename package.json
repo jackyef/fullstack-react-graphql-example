@@ -7,14 +7,21 @@
   "license": "MIT",
   "dependencies": {
     "@koa/router": "^9.0.1",
+    "debug": "^4.1.1",
+    "dotenv": "^8.2.0",
     "koa": "^2.12.0",
+    "koa-bodyparser": "^4.3.0",
     "koa-cookie": "^1.0.0",
+    "koa-logger": "^3.2.1",
+    "koa-oai-mongoose": "^2.0.2",
     "mongoose": "^5.9.18",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5"
   },
   "devDependencies": {
     "@types/koa": "^2.11.3",
+    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-logger": "^3.1.1",
     "@types/mongoose": "^5.7.24",
     "ts-node-dev": "^1.0.0-pre.44"
   }
