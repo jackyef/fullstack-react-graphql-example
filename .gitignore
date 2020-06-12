@@ -1,9 +1,9 @@
 mongodump
-
 node_modules
-
 dist
 
 *.log
-
+.next
 .secret
+.env.dev
+.env
