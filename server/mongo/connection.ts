@@ -1,4 +1,4 @@
-const logger = require('debug')('mongo/connection');
+const logger = require('debug')('server/mongo/connection');
 
 import mongoose from 'mongoose';
 import './models/User';
@@ -13,7 +13,7 @@ const mongoUrl = `mongodb://${user}:${pass}@${host}:${port}/${db}`;
 
 export default (): Promise<mongoose.Connection> => {
   const connect = (): void => {
-    mongoose.connect(mongoUrl, { useNewUrlParser: true, autoReconnect: true });
+    mongoose.connect(mongoUrl, { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true });
   };
 
   return new Promise<mongoose.Connection>((resolve): void => {

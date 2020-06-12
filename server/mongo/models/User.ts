@@ -1,9 +1,16 @@
 import mongoose from 'mongoose';
 
+export interface User {
+  id: string;
+  name: string;
+  role: 'user' | 'owner' | 'admin';
+  email: string;
+}
+
 interface UserDocument extends mongoose.Document {
   id: string;
   name: string;
-  permissions: string[];
+  role: 'user' | 'owner' | 'admin';
   email: string;
 }
 
@@ -11,7 +18,7 @@ const UserSchema = new mongoose.Schema(
   {
     id: { type: String, index: true, unique: true },
     name: { type: String, index: true },
-    permissions: [String],
+    role: { type: String },
     email: { type: String, index: true },
   },
   {

@@ -29,7 +29,7 @@ services:
     ports:
       - 44001:80
     restart: always
-    command: /app/node_modules/.bin/ts-node-dev --transpile-only /app/server/index.ts
+    command: /app/node_modules/.bin/ts-node-dev --poll --transpile-only /app/server/index.ts
     # command: tail -f /dev/null
     env_file:
       - ./.env.dev
