@@ -3,19 +3,17 @@ import { AuthContext } from '../../context/auth';
 import Router from 'next/Router';
 
 interface Props {
-  Fallback: React.ElementType;
+  fallback: React.ReactElement;
 }
 
-export const PrivateRoute: React.FC<Props> = ({ children, Fallback }) => {
+export const PrivateRoute: React.FC<Props> = ({ children, fallback }) => {
   const auth = React.useContext(AuthContext);
 
-  console.log({ auth })
-
   if (auth.state !== 'done') {
-    return <Fallback />
+    return fallback;
   }
 
-  if (auth.userId < 1) {
+  if (!auth.isAuthenticated) {
     // redirect to login
     Router.push('/auth/login');
 

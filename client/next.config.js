@@ -1,7 +1,7 @@
-require('dotenv').config();
+require('./init-env');
 
 module.exports = {
   env: {
-    oAuthClientId: process.env.OAUTH_CLIENTID,
+    BACKEND_HOST: process.env['BACKEND_HOST'],
   },
 }

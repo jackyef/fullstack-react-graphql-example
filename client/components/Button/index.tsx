@@ -7,6 +7,7 @@ const styleFix = {
 /**
  * Wrapper for chakra-ui button that uses css var for background color
  * This is to work around invalid button color in chakra-ui buttons
+ * Only use for buttons not using "variantColor" props
  */
 export const Button: typeof _Button = ({ style, ...rest }) => {
   return (

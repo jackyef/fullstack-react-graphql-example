@@ -1,9 +1,16 @@
 import * as React from 'react';
 import { Flex, useTheme } from '@chakra-ui/core';
 import Layout from '../../components/Layout';
+import { AuthContext } from '../../context/auth';
+import Router from 'next/Router';
 
 const LoginPage = () => {
   const theme = useTheme();
+  const { isAuthenticated } = React.useContext(AuthContext);
+
+  if (isAuthenticated) {
+    Router.push('/');
+  }
 
   return (
     <Layout title="Login to APP_NAME">

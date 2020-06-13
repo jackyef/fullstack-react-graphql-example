@@ -6,7 +6,7 @@
   "author": "Jacky Efendi <jacky.efendi1@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "next ./client"
+    "dev": "node client/dev-server.js"
   },
   "dependencies": {
     "@chakra-ui/core": "^0.6.1",
@@ -22,12 +22,14 @@
     "emotion-theming": "^10.0.19",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
+    "http-proxy-middleware": "^0.17.4",
     "koa-oai-mongoose": "^2.0.2",
     "mongoose": "^5.9.18",
     "morgan": "^1.10.0",
     "next": "^9.2.1",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
+    "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "ts-node": "^8.10.2",

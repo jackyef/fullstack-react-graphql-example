@@ -8,7 +8,7 @@ type LayoutProps = {
 
 const Layout: React.FC<LayoutProps> = ({ children, title }) => {
   return (
-    <Flex maxW="960px" minH={'100vh'}>
+    <Flex maxW="960px" minH={'100vh'} margin="0 auto">
       <Head>   
         <title>{title}</title>
         <meta charSet="utf-8" />
