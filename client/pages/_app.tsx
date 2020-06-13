@@ -10,7 +10,7 @@ import { Button } from '../components/Button';
 // this is just to quick testing on development
 function ColorModeExample() {
   const { colorMode, toggleColorMode } = useColorMode();
-  
+
   return (
     <Flex position="absolute" top="12px" right="12px">
       <Button onClick={toggleColorMode}>
