@@ -9,15 +9,15 @@ interface Props {
 export const PrivateRoute: React.FC<Props> = ({ children, fallback }) => {
   const auth = React.useContext(AuthContext);
 
-  React.useLayoutEffect(() => {
-    if (!auth.isAuthenticated && auth.state === 'done') {
-      // redirect to login
-      Router.push('/auth/login');
-    }
-  });
-
   if (auth.state !== 'done') {
     return fallback;
+  }
+
+  if (!auth.isAuthenticated && auth.state === 'done') {
+    // redirect to login
+    Router.push('/auth/login');
+
+    return null;
   }
 
   return <>{children}</>;

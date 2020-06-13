@@ -15,8 +15,6 @@ const LoginPage = () => {
   const theme = useTheme();
   const { isAuthenticated } = React.useContext(AuthContext);
 
-  console.log(theme)
-
   React.useLayoutEffect(() => {
     if (isAuthenticated) {
       Router.push('/');
@@ -77,7 +75,7 @@ const LoginPage = () => {
           </Button>
         </Flex>
       </Flex>
-      <Flex flex={2} display={["none", "none", "flex"]} backgroundColor={theme.colors.blackAlpha[200]} paddingX={theme.space[16]} paddingY={theme.space[64]}>
+      <Flex flex={2} display={["none", "none", "flex"]} backgroundColor={theme.colors.blackAlpha[200]} paddingX={theme.space[16]} alignItems="center">
         <Stack spacing={3}>
           <Text as="strong" display="block" fontSize="2xl">Stop asking questions like:</Text>
           <Text as="strong" display="block" fontSize="5xl"><em>Where do you want to eat?</em></Text>

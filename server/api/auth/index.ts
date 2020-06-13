@@ -3,8 +3,6 @@ import { Application } from 'express';
 
 const frontendHome = process.env['FRONTEND_HOST'] as string;
 
-const log = require('debug')('server/api/auth/index');
-
 export const setupAuthAPIs = (app: Application) => {
   app.get('/api/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 

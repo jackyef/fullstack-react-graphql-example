@@ -2,6 +2,7 @@ const logger = require('debug')('server/mongo/connection');
 
 import mongoose from 'mongoose';
 import './models/User';
+import './models/Restaurant';
 
 const user = process.env['MONGODB_USERNAME']
 const pass = process.env['MONGODB_PASSWORD']
@@ -13,7 +14,7 @@ const mongoUrl = `mongodb://${user}:${pass}@${host}:${port}/${db}`;
 
 export default (): Promise<mongoose.Connection> => {
   const connect = (): void => {
-    mongoose.connect(mongoUrl, { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true });
+    mongoose.connect(mongoUrl, { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
   };
 
   return new Promise<mongoose.Connection>((resolve): void => {

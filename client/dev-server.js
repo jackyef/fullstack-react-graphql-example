@@ -5,7 +5,7 @@ const next = require('next')
 
 const devProxy = {
   '/api': {
-    target: `${process.env['BACKEND_HOST']}/api/`,
+    target: `${process.env['BACKEND_HOST']}/api`,
     pathRewrite: { '^/api': '/' },
     changeOrigin: true,
   },

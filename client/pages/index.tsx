@@ -11,7 +11,7 @@ const Index: React.FC = () => {
   return (
     <Layout title="Home">
       <Flex flexDirection="column" flex="1" padding={["1rem"]}>
-        <PrivateRoute fallback={<FullPageLoader message="Authenticated..." />}>
+        <PrivateRoute fallback={<FullPageLoader message="Authenticating..." />}>
           <div>Hello world!</div>
           <div>Later on we will show restaurant list here based on logged in user</div>
           <Divider />

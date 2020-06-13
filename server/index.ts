@@ -10,10 +10,13 @@ import createSessionStore from './api/auth/store';
 
 import initMongo from './mongo/connection';
 import { setupAuthAPIs } from './api/auth';
+import { setupRestaurantAPIs } from './api/restaurant';
 
 const log = require('debug')('server');
 const PORT = 80;
 const app = express();
+
+app.disable('etag');
 
 (async () => {
   const mongoConnection = await initMongo();
@@ -37,6 +40,7 @@ const app = express();
   app.use(passport.session());
 
   setupAuthAPIs(app);
+  setupRestaurantAPIs(app);
 
   app.get('*', (_req, res) => {
     res.send('hello from express')
