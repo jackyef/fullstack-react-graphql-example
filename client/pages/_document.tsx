@@ -1,5 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
-import useDarkModeFix from '../utils/misc/useDarkModeFix'
+import NoFlashSript from '../utils/misc/NoFlashScripts'
 
 class MyDocument extends Document {
   render() {
@@ -8,7 +8,7 @@ class MyDocument extends Document {
         <Head />
         <body>
           <Head>
-            <script dangerouslySetInnerHTML={{ __html: useDarkModeFix }} />
+            <NoFlashSript />
           </Head>
           <Main />
           <NextScript />

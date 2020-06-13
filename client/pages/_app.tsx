@@ -1,10 +1,11 @@
 import React from 'react';
 import App from 'next/app';
-import { ThemeProvider, CSSReset, theme, ColorModeProvider, useColorMode, Button, Flex } from '@chakra-ui/core';
+import { ThemeProvider, CSSReset, theme, ColorModeProvider, useColorMode, Flex } from '@chakra-ui/core';
 import { Global } from '@emotion/core';
 
 import mainStyles from '../styles/main';
 import { AuthProvider } from '../context/auth';
+import { Button } from '../components/Button';
 
 // this is just to quick testing on development
 function ColorModeExample() {
