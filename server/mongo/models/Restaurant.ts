@@ -10,11 +10,14 @@ export interface Restaurant {
   // considering using github as free cdn? https://raw.githubusercontent.com/jackyef/test-db/master/test.jpeg
   imageUrl: string; 
   
-  // average rating of the restaurant. Will be updated as it gets new reviews
+  // average rating of the restauran
+  // Will be updated as it gets new reviews
+  // Will be updated when a review is deleted as well
   rating: number;
 
   // number of reviews the restaurant has received
   // storing this allow us to calculate average faster
+  // will be updated when a review is added or deleted
   reviewsCount: number;
 
   // keep track of the lowest and highest review the restaurant has gotten.

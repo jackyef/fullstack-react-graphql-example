@@ -1,7 +1,7 @@
 import passport from './passport/google';
 import { Application } from 'express';
 
-const frontendHome = process.env['FRONTEND_HOST'] as string;
+const frontendHome = `${process.env['FRONTEND_HOST']}:${process.env['FRONTEND_PORT']}` as string;
 
 export const setupAuthAPIs = (app: Application) => {
   app.get('/api/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));

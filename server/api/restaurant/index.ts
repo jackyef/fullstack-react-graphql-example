@@ -3,8 +3,6 @@ import mongoose from 'mongoose';
 import { ownerOnly, adminOnly } from '../../utils/acl';
 import { ValidationError } from '../../utils/errors/ValidationError';
 
-const log = require('debug')('server/api/restaurant/index');
-
 const Restaurant = mongoose.model('Restaurant');
 
 const requiredFields: Record<string, string[]> = {
@@ -47,6 +45,7 @@ export const setupRestaurantAPIs = (app: Application) => {
         imageUrl: 1,
         phone: 1,
         rating: 1,
+        reviewsCount: 1,
       }).sort({ rating: -1 });
 
       res.status(200);
@@ -92,7 +91,7 @@ export const setupRestaurantAPIs = (app: Application) => {
 
   });
 
-  app.patch('/api/restaurants/:id', ownerOnly, async (req, res, next) => {
+  app.patch('/api/restaurants/:id', adminOnly, async (req, res) => {
     // update an existing restaurant in the db
     const { id } = req.params;
 
@@ -112,6 +111,7 @@ export const setupRestaurantAPIs = (app: Application) => {
           imageUrl: 1,
           phone: 1,
           rating: 1,
+          reviewsCount: 1,
         }
       }).exec();
 
@@ -123,7 +123,7 @@ export const setupRestaurantAPIs = (app: Application) => {
     }
   });
 
-  app.delete('/api/restaurants/:id', ownerOnly, async (req, res) => {
+  app.delete('/api/restaurants/:id', adminOnly, async (req, res) => {
     // delete an existing restaurant in the db
     const { id } = req.params;
 
