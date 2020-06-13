@@ -10,15 +10,15 @@ export default css`
   body.light-mode {
     --button-bg-secondary: #EDF2F7;
     --button-bg-primary: #493caa;
-    --button-bg-accent: #726712;
-    --button-bg-error: #cb2259;
-    --button-bg-success: #14725a;
+    --button-bg-accent: #971E8B;
+    --button-bg-error: #AB1249;
+    --button-bg-success: #14624A;
   }
   body.dark-mode {
     --button-bg-secondary: #313640;
     --button-bg-primary: #bfb8fc;
-    --button-bg-accent: #eddc64;
-    --button-bg-error: #ea62a2;
-    --button-bg-success: #3ee69b;
+    --button-bg-accent: #eb94e2;
+    --button-bg-error: #F18EBC;
+    --button-bg-success: #5febac;
   }
 `;

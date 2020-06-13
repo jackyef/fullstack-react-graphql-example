@@ -42,9 +42,11 @@ const LoginPage = () => {
           justifyContent="center"
           flexDirection="column"
           shadow="lg"
-          padding={[theme.space[4]]}
+          padding={theme.space[4]}
           paddingTop="-100px"
-          backgroundColor={theme.colors.blackAlpha[200]}
+          paddingBottom={theme.space[12]}
+          backgroundColor={theme.colors.whiteAlpha[50]}
+          borderRadius="lg"
         >
           <Image
             src={brandImage}
@@ -54,10 +56,10 @@ const LoginPage = () => {
             position="relative"
             top="-144px"
             mb="-112px"
-            backgroundColor={theme.colors.whiteAlpha[300]}
+            backgroundColor={theme.colors.whiteAlpha[100]}
+            shadow="lg"
             border={theme.borders["1px"]}
             borderColor={theme.colors.blackAlpha[200]}
-            shadow="lg"
             padding={theme.space[4]}
             borderRadius="lg"
           />
@@ -75,7 +77,7 @@ const LoginPage = () => {
           </Button>
         </Flex>
       </Flex>
-      <Flex flex={2} display={["none", "none", "flex"]} backgroundColor={theme.colors.blackAlpha[200]} paddingX={theme.space[16]} paddingY={theme.space[48]}>
+      <Flex flex={2} display={["none", "none", "flex"]} backgroundColor={theme.colors.blackAlpha[200]} paddingX={theme.space[16]} paddingY={theme.space[64]}>
         <Stack spacing={3}>
           <Text as="strong" display="block" fontSize="2xl">Stop asking questions like:</Text>
           <Text as="strong" display="block" fontSize="5xl"><em>Where do you want to eat?</em></Text>
