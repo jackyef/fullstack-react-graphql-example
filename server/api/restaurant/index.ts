@@ -34,11 +34,27 @@ const validateInput = (method: string, body: Record<string, any>): boolean => {
 }
 
 export const setupRestaurantAPIs = (app: Application) => {
-  app.get('/api/restaurants', async (_req, res) => {
+  app.get('/api/restaurants', async (req, res) => {
     // get list of all restaurants
     // can accept sort and filter via query param
+    const { ownerId } = req.query;
+
     try {
-      const restaurants = await Restaurant.find({}, {
+      // only take what are allowed
+      const filteredParam: any = {};
+
+      // only allow owners to query for their own restaurants
+      // prevent people that might want to harvest data
+      if (ownerId === req.session?.passport?.user?.id) {
+        filteredParam.ownerId = ownerId;
+      } else {
+        throw new ValidationError({
+          code: 403,
+          friendlyMessage: `You do not have permission to access this resource.`,
+        }, `Non-owner trying to query restaurants list that are not his/hers`);
+      }
+
+      const restaurants = await Restaurant.find(filteredParam, {
         _id: 1,
         name: 1,
         address: 1,
@@ -51,8 +67,15 @@ export const setupRestaurantAPIs = (app: Application) => {
       res.status(200);
       res.send(restaurants);
     } catch (err) {
-      // @TODO: handle mongoose error here.
-      res.sendStatus(500);
+      if (err.code) {
+        res.status(err.code);
+        res.send({
+          message: err.friendlyMessage,
+        });
+      } else {
+        // @TODO: handle mongoose error here.
+        res.sendStatus(500);
+      }
     }
   });
 

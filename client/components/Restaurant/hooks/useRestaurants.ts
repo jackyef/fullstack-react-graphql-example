@@ -1,4 +1,5 @@
 import * as React from 'react';
+import querystring from 'querystring';
 import { FetchState } from '../../../utils/fetch';
 
 export interface Restaurant {
@@ -40,7 +41,7 @@ const initialState: State = {
 
 const restaurantListEndpoint = '/api/restaurants';
 
-export const useRestaurant = () => {
+export const useRestaurant = ({ ownerId = '' }) => {
   const [state, setState] = React.useState(initialState);
 
   const { state: fetchState, restaurants, error } = state;
@@ -51,7 +52,20 @@ export const useRestaurant = () => {
       state: 'in-flight',
     }));
 
-    fetch(restaurantListEndpoint).then(res => res.json()).then(json => {
+    const paramObj: any = {};
+
+    if (ownerId) paramObj.ownerId = ownerId;
+    const params = querystring.stringify(paramObj);
+
+    fetch(`${restaurantListEndpoint}?${params}`).then(res => {
+      // only 5xx are errors,
+      // for non 2xx, we need to check res.ok manually
+      if (res.ok) {
+        return res.json();
+      }
+
+      throw new Error(`${res.status} - ${res.statusText}`);
+    }).then(json => {
       setState({
         restaurants: json,
         state: 'done',
