@@ -1,19 +1,17 @@
 import * as React from 'react';
-import Link from 'next/Link';
 import { useRestaurant } from './hooks/useRestaurants';
 import FullPageLoader from '../Spinner/FullPage';
 import { RestaurantCard } from './Restaurant';
 import { EmptyState } from '../State/Empty';
 import { ErrorState } from '../State/Error';
-import { Button } from '../Button';
-import { Box, Flex } from '@chakra-ui/core';
 
 interface Props {
   ownerId?: string;
+  rating?: number;
 }
 
-export const RestaurantList: React.FC<Props> = ({ ownerId }) => {
-  const { state, restaurants, error } = useRestaurant({ ownerId });
+export const RestaurantList: React.FC<Props> = ({ ownerId, rating }) => {
+  const { state, restaurants, error } = useRestaurant({ ownerId, rating });
 
   if (state === 'error') {
     if (error instanceof Error) {
@@ -21,24 +19,17 @@ export const RestaurantList: React.FC<Props> = ({ ownerId }) => {
       console.error(`stack`, error.stack)
     }
 
-    return <ErrorState message="An error happened when trying to get your restaurants 🙇" />;
+    return <ErrorState message="An error happened when trying to get restaurants list 🙇" />;
   }
 
   if (state !== 'done') {
-    return <FullPageLoader message="loading restaurants..." />;
+    return <FullPageLoader message="Loading restaurants..." />;
   }
 
   if (restaurants.length < 1) {
     return (
       <>
-        <EmptyState message="You don't have any restaurants yet" />
-        <Flex flexDirection="column" alignItems="center">
-          <Button variantColor="primary">
-            <Link href="/restaurants/add">
-              Add a restaurant
-            </Link>
-          </Button>
-        </Flex>
+        <EmptyState message="Nothing's here yet..." />
       </>
     );
   }

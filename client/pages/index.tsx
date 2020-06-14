@@ -10,6 +10,7 @@ import { OwnerHome } from '../routes/Home/Owner';
 const pageMap: Record<string, React.ElementType> = {
   user: UserHome,
   owner: OwnerHome,
+  admin: UserHome, // Admin homepage will be the last one to be worked on
 };
 
 const Index: React.FC = () => {

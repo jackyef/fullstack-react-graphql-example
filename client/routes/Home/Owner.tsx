@@ -1,5 +1,8 @@
 import * as React from 'react';
-import { Heading, Divider, Text, Stack } from '@chakra-ui/core';
+import { Flex, Heading, Divider, Text, Stack } from '@chakra-ui/core';
+import Link from 'next/Link';
+
+import { Button } from '../../components/Button';
 import { RestaurantList } from '../../components/Restaurant/List';
 import { AuthContext } from '../../context/auth';
 
@@ -16,6 +19,13 @@ export const OwnerHome: React.FC = () => {
           Here are your restaurants. See what people are saying!
         </Text>
         <Divider />
+        <Flex flexDirection="column">
+          <Button variantColor="primary">
+            <Link href="/restaurants/add">
+              Add a restaurant
+            </Link>
+          </Button>
+        </Flex>
       </Stack>
       <RestaurantList ownerId={user.id} />
     </>

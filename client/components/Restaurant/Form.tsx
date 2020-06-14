@@ -120,6 +120,7 @@ export const RestaurantForm: React.FC = () => {
       toast({
         title: 'All done!',
         description: `Your restaurant has been added!`,
+        status: 'success',
       });
 
       // @TODO: redirect to restaurant detail page instead

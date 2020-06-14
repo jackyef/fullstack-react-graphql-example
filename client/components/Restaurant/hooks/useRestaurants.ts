@@ -41,13 +41,15 @@ const initialState: State = {
 
 const restaurantListEndpoint = '/api/restaurants';
 
-export const useRestaurant = ({ ownerId = '' }) => {
+export const useRestaurant = ({ ownerId = '', rating = 0 }) => {
   const [state, setState] = React.useState(initialState);
 
   const { state: fetchState, restaurants, error } = state;
 
   React.useEffect(() => {
-    setState(prev => ({
+    let handler = setState;
+    
+    handler(prev => ({
       ...prev,
       state: 'in-flight',
     }));
@@ -55,6 +57,7 @@ export const useRestaurant = ({ ownerId = '' }) => {
     const paramObj: any = {};
 
     if (ownerId) paramObj.ownerId = ownerId;
+    if (rating) paramObj.rating = rating;
     const params = querystring.stringify(paramObj);
 
     fetch(`${restaurantListEndpoint}?${params}`).then(res => {
@@ -66,18 +69,22 @@ export const useRestaurant = ({ ownerId = '' }) => {
 
       throw new Error(`${res.status} - ${res.statusText}`);
     }).then(json => {
-      setState({
+      handler({
         restaurants: json,
         state: 'done',
       });
     }).catch(error => {
-      setState({
+      handler({
         state: 'error',
         restaurants: [],
         error,
       })
     })
-  }, [])
+
+    return () => {
+      handler = () => null; // allows ignoring old updates, prevent race condition
+    }
+  }, [ownerId, rating])
 
   return {
     state: fetchState,

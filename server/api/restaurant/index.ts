@@ -37,7 +37,7 @@ export const setupRestaurantAPIs = (app: Application) => {
   app.get('/api/restaurants', async (req, res) => {
     // get list of all restaurants
     // can accept sort and filter via query param
-    const { ownerId } = req.query;
+    const { ownerId, rating } = req.query;
 
     try {
       // only take what are allowed
@@ -45,13 +45,20 @@ export const setupRestaurantAPIs = (app: Application) => {
 
       // only allow owners to query for their own restaurants
       // prevent people that might want to harvest data
-      if (ownerId === req.session?.passport?.user?.id) {
-        filteredParam.ownerId = ownerId;
-      } else {
-        throw new ValidationError({
-          code: 403,
-          friendlyMessage: `You do not have permission to access this resource.`,
-        }, `Non-owner trying to query restaurants list that are not his/hers`);
+      if (ownerId) {
+        if (ownerId === req.session?.passport?.user?.id) {
+          filteredParam.ownerId = ownerId;
+        } else {
+          throw new ValidationError({
+            code: 403,
+            friendlyMessage: `You do not have permission to access this resource.`,
+          }, `Non-owner trying to query restaurants list that are not his/hers`);
+        }
+      }
+
+      if (rating) {
+        const floor = Math.floor(Number(rating));
+        filteredParam.rating = { $gte: floor, $lt: floor + 1 };
       }
 
       const restaurants = await Restaurant.find(filteredParam, {
