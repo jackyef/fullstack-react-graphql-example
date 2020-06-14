@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 
 import express from 'express';
 import session from 'express-session';
@@ -11,6 +11,7 @@ import createSessionStore from './api/auth/store';
 import initMongo from './mongo/connection';
 import { setupAuthAPIs } from './api/auth';
 import { setupRestaurantAPIs } from './api/restaurant';
+import { setupUploadAPIs } from './api/upload/image';
 
 const log = require('debug')('server');
 const PORT = 80;
@@ -24,6 +25,7 @@ app.disable('etag');
 
   app.use(morgan('tiny'));
   app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
   app.use(cookieParser());
   app.use(
     session({
@@ -41,9 +43,10 @@ app.disable('etag');
 
   setupAuthAPIs(app);
   setupRestaurantAPIs(app);
+  setupUploadAPIs(app);
 
   app.get('*', (_req, res) => {
-    res.send('hello from express')
+    res.send('hello from express');
   });
 
   app.listen(PORT, () => {
@@ -52,10 +55,12 @@ app.disable('etag');
 })();
 
 const gracefulShutdownHandler = () => {
-  log('Shutting down due to SIGINT/SIGTERM. This is usually sent by ts-node-dev');
+  log(
+    'Shutting down due to SIGINT/SIGTERM. This is usually sent by ts-node-dev',
+  );
 
   process.exit(0);
-}
+};
 
 process.on('SIGINT', gracefulShutdownHandler);
 process.on('SIGTERM', gracefulShutdownHandler);

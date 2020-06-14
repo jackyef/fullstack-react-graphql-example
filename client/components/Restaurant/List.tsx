@@ -34,7 +34,7 @@ export const RestaurantList: React.FC<Props> = ({ ownerId }) => {
         <EmptyState message="You don't have any restaurants yet" />
         <Flex flexDirection="column" alignItems="center">
           <Button variantColor="primary">
-            <Link href="/restaurant/add">
+            <Link href="/restaurants/add">
               Add a restaurant
             </Link>
           </Button>

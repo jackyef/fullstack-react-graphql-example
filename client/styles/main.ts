@@ -19,6 +19,9 @@ export default css`
     --button-bg-success: #14624A;
     
     --rating-star: #FFC200;
+
+    --text-invert: #fff;
+    --text-primary: #1a202c;
   }
   body.dark-mode {
     --button-bg-secondary: #313640;
@@ -26,7 +29,10 @@ export default css`
     --button-bg-accent: #eb94e2;
     --button-bg-error: #F18EBC;
     --button-bg-success: #5febac;
-
+    
     --rating-star: #FFC200;
+    
+    --text-invert: #fff;
+    --text-primary: #1a202c;
   }
 `;

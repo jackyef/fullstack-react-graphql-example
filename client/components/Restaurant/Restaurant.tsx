@@ -40,7 +40,6 @@ export const RestaurantCard: React.FC<Props> = ({
 
   return (
     <Flex
-      flex="1"
       border={theme.borders["1px"]}
       borderColor={theme.colors.blackAlpha[300]}
       flexDirection="column"
