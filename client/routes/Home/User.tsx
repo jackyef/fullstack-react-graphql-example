@@ -3,6 +3,7 @@ import { Heading, Divider, Text, Stack, Tag } from '@chakra-ui/core';
 import { MdStar } from 'react-icons/md';
 import { RestaurantList } from '../../components/Restaurant/List';
 import { AuthContext } from '../../context/auth';
+import { hideScrollBar } from '../../styles/utils';
 
 export const UserHome: React.FC = () => {
   const { user } = React.useContext(AuthContext);
@@ -19,7 +20,7 @@ export const UserHome: React.FC = () => {
           check them out?
         </Text>
         <Divider />
-        <Stack isInline overflowX="scroll" whiteSpace="nowrap">
+        <Stack isInline overflowX="scroll" whiteSpace="nowrap" className={hideScrollBar}>
           <Tag
             onClick={() => setRating(0)}
             variant={rating === 0 ? 'solid' : 'subtle'}

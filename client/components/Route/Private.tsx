@@ -10,7 +10,7 @@ export const PrivateRoute: React.FC<Props> = ({ children, fallback }) => {
   const auth = React.useContext(AuthContext);
 
   if (auth.state === 'error') {
-    return <div>an error happened {auth.error}</div>;
+    return <div>an error happened {auth.error?.toString()}</div>;
   }
 
   if (auth.state !== 'done') {
