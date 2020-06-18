@@ -3,6 +3,7 @@ const logger = require('debug')('server/mongo/connection');
 import mongoose from 'mongoose';
 import './models/User';
 import './models/Restaurant';
+import './models/Review';
 
 const user = process.env['MONGODB_USERNAME']
 const pass = process.env['MONGODB_PASSWORD']
