@@ -5,6 +5,40 @@
   - name: user
     using:
       foreign_key_constraint_on: owner_id
+  insert_permissions:
+  - role: owner
+    permission:
+      check: {}
+      set:
+        owner_id: x-hasura-User-Id
+      columns:
+      - address
+      - description
+      - name
+      - phone
+      backend_only: false
+  select_permissions:
+  - role: owner
+    permission:
+      columns: []
+      filter: {}
+  - role: user
+    permission:
+      columns: []
+      filter: {}
+  update_permissions:
+  - role: owner
+    permission:
+      columns:
+      - address
+      - description
+      - name
+      - phone
+      - rating
+      filter: {}
+      check: null
+      set:
+        owner_id: x-hasura-User-Id
 - table:
     schema: public
     name: reviews
@@ -15,6 +49,58 @@
   - name: user
     using:
       foreign_key_constraint_on: user_id
+  insert_permissions:
+  - role: owner
+    permission:
+      check:
+        restaurant:
+          owner_id:
+            _ne: X-Hasura-User-Id
+      set:
+        user_id: x-hasura-User-Id
+      columns:
+      - message
+      - rating
+      - restaurant_id
+      - visitted_at
+      backend_only: false
+  - role: user
+    permission:
+      check: {}
+      set:
+        user_id: x-hasura-User-Id
+      columns:
+      - message
+      - rating
+      - restaurant_id
+      backend_only: false
+  select_permissions:
+  - role: owner
+    permission:
+      columns: []
+      filter: {}
+  - role: user
+    permission:
+      columns: []
+      filter: {}
+  update_permissions:
+  - role: owner
+    permission:
+      columns: []
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check: null
+  - role: user
+    permission:
+      columns: []
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check: null
+- table:
+    schema: public
+    name: session
 - table:
     schema: public
     name: users
