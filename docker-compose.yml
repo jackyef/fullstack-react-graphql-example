@@ -3,8 +3,22 @@ version: '3.3'
 volumes:
   mongodb_restaurant:
   db_data:
+  redis_data:
 
 services:
+  redis:
+    restart: always
+    image: bitnami/redis:6.0-debian-10
+    volumes:
+      - redis_data:/bitnami/redis/data
+    ports:
+      - 44002:6379
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '1m'
+    environment:
+      ALLOW_EMPTY_PASSWORD: 'yes'
   mongo:
     restart: always
     image: bitnami/mongodb:4.0

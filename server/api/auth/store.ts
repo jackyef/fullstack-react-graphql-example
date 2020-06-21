@@ -1,7 +1,10 @@
 import session from 'express-session';
-import mongoose from 'mongoose';
-import connectMongo from 'connect-mongo';
+import redis from 'redis';
 
-const MongoStore = connectMongo(session);
+const RedisStore = require('connect-redis')(session);
+const redisClient = redis.createClient({
+  host: 'redis',
+  port: 6379,
+});
 
-export default (mongooseConnection: mongoose.Connection) => new MongoStore({ mongooseConnection });
+export default new RedisStore({ client: redisClient });

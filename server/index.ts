@@ -6,7 +6,7 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import passport from './api/auth/passport/google';
-import createSessionStore from './api/auth/store';
+import SessionStore from './api/auth/store';
 
 import initMongo from './mongo/connection';
 import { setupAuthAPIs } from './api/auth';
@@ -20,8 +20,7 @@ const app = express();
 app.disable('etag');
 
 (async () => {
-  const mongoConnection = await initMongo();
-  const sessionStore = createSessionStore(mongoConnection);
+  await initMongo();
 
   app.use(morgan('tiny'));
   app.use(bodyParser.json());
@@ -32,7 +31,7 @@ app.disable('etag');
       cookie: {
         httpOnly: true,
       },
-      store: sessionStore,
+      store: SessionStore,
       secret: process.env['EXPRESS_SECRET'] as string,
       resave: false,
       saveUninitialized: false,
