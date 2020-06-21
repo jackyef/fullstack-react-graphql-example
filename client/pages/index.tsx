@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Button, Heading, Divider } from '@chakra-ui/core';
+import { Flex, Button, Heading, Divider, Box } from '@chakra-ui/core';
 import Layout from '../components/Layout';
 import { PrivateRoute } from '../components/Route/Private';
 import { AuthContext } from '../context/auth';
@@ -20,6 +20,7 @@ const Index: React.FC = () => {
 
   return (
     <Layout title="Home">
+      <Box w={480} margin="0 auto">
       <Flex flexDirection="column" flex="1" padding={['1rem']}>
         <PrivateRoute fallback={<FullPageLoader message="Authenticating..." />}>
           {Page ? <Page /> : null}
@@ -30,6 +31,7 @@ const Index: React.FC = () => {
           </Button>
         </PrivateRoute>
       </Flex>
+      </Box>
     </Layout>
   );
 };

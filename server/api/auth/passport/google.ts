@@ -2,6 +2,9 @@ import passport from 'passport';
 import mongoose from 'mongoose';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { User } from '../../../mongo/models/User';
+import { fetchGraphql } from '../../../utils/graphql/fetch';
+import { userByIdQuery, insertUserMutation } from './graphql/queries';
+import fetch from 'node-fetch';
 
 passport.serializeUser(
   (user: User, done): void => {
@@ -35,22 +38,26 @@ export default passport.use(
     },
     async (__, ___, profile, cb): Promise<void> => {
       const user = await profileToUser(profile);
-      const User = mongoose.model('User');
-      const existingUser = await User.findOne({ id: user.id });
+      
+      // get user info from hasura GQL server
+      const gqlData = await fetchGraphql(userByIdQuery(user.id));
+      const existingUser = gqlData?.data?.users_by_pk;
+
+      console.log(JSON.stringify(existingUser, null, 2))
+      console.log(JSON.stringify(user, null, 2))
 
       if (existingUser) {
-        cb(undefined, { ...user, ...existingUser.toObject() });
+        cb(undefined, { ...user, ...existingUser });
 
         return;
       }
 
-      new User(user)
-        .save()
-        .then(
-          (): void => {
-            cb(undefined, user);
-          },
-        );
+      // save user to postgre via hasura
+      const gqlData2 = await fetchGraphql(insertUserMutation(user));
+      const newUser = gqlData2?.data?.insert_users_one || {};
+
+      cb(undefined, newUser);
+      console.log(JSON.stringify(gqlData2, null, 2))
     }
   ),
 );

@@ -33,3 +33,8 @@
     ```sh
     yarn dev # start the next development build on port 3000
     ```
+
+## Dumping postgres DB
+```
+docker-compose run postgres pg_dump -U postgres -P postgrespassword -W -F t postgres > ./pgdump/backup.tar
+```

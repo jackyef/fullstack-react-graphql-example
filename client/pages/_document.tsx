@@ -1,3 +1,4 @@
+import * as React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import NoFlashSript from '../utils/misc/NoFlashScripts'
 
