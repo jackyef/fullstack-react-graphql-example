@@ -1,8 +1,13 @@
 - table:
     schema: public
     name: restaurants
+  configuration:
+    custom_root_fields: {}
+    custom_column_names:
+      reviews_count: reviewsCount
+      image_url: imageUrl
   object_relationships:
-  - name: user
+  - name: owner
     using:
       foreign_key_constraint_on: owner_id
   insert_permissions:
@@ -14,17 +19,36 @@
       columns:
       - address
       - description
+      - image_url
       - name
       - phone
       backend_only: false
   select_permissions:
   - role: owner
     permission:
-      columns: []
+      columns:
+      - address
+      - description
+      - id
+      - image_url
+      - name
+      - owner_id
+      - phone
+      - rating
+      - reviews_count
       filter: {}
   - role: user
     permission:
-      columns: []
+      columns:
+      - address
+      - description
+      - id
+      - image_url
+      - name
+      - owner_id
+      - phone
+      - rating
+      - reviews_count
       filter: {}
   update_permissions:
   - role: owner

@@ -11,15 +11,22 @@ import Router from 'next/Router';
 import { Image } from '../Image';
 import ImagePlaceholder from '../../assets/undraw_folder_x4ft.svg';
 import { Button } from '../Button';
+import { useMutation } from 'graphql-hooks';
 
 const allowedImageExtensions = ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'];
 
 const uploadEndpoint = '/api/upload/image';
-const restaurantEndpoint = '/api/restaurants';
 
 type FormState = 'idle' | 'uploading' | 'submitting' | 'done' | 'error';
 
+const mutation = `mutation InsertRestaurant ($address: String, $description: String, $phone: String, $name: String!, $imageUrl: String) {
+  insert_restaurants_one(object: {address: $address, description: $description, imageUrl: $imageUrl, name: $name, phone: $phone}) {
+    id
+  }
+}`;
+
 export const RestaurantForm: React.FC = () => {
+  const [addRestaurant] = useMutation(mutation);
   const [formError, setFormError] = React.useState<Error>();
   const [formState, setFormState] = React.useState<FormState>('idle');
   const [imageDataURI, setImageData] = React.useState<string>();
@@ -99,22 +106,19 @@ export const RestaurantForm: React.FC = () => {
     imageUrl: string,
   }) => {
     try {
-      const response = await fetch(restaurantEndpoint, {
-        method: 'POST',
-        body: JSON.stringify({
+      const res = await addRestaurant({
+        variables: {
           name,
           description,
           address,
           phone,
           imageUrl,
-        }),
-        credentials: 'include',
-        headers: {
-          'content-type': 'application/json',
-        },
+        }
       });
 
-      if (!response.ok) throw new Error(`${response.status} - ${response.statusText}`);
+      if (res.error) {
+        throw new Error('Failed to add new restaurant!');
+      }
 
       setFormState('done');
       toast({

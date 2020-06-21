@@ -8,9 +8,7 @@ import morgan from 'morgan';
 import passport from './api/auth/passport/google';
 import SessionStore from './api/auth/store';
 
-import initMongo from './mongo/connection';
 import { setupAuthAPIs } from './api/auth';
-import { setupRestaurantAPIs } from './api/restaurant';
 import { setupUploadAPIs } from './api/upload/image';
 
 const log = require('debug')('server');
@@ -20,8 +18,6 @@ const app = express();
 app.disable('etag');
 
 (async () => {
-  await initMongo();
-
   app.use(morgan('tiny'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
@@ -41,7 +37,6 @@ app.disable('etag');
   app.use(passport.session());
 
   setupAuthAPIs(app);
-  setupRestaurantAPIs(app);
   setupUploadAPIs(app);
 
   app.get('*', (_req, res) => {

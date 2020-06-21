@@ -1,10 +1,8 @@
 import passport from 'passport';
-import mongoose from 'mongoose';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { User } from '../../../mongo/models/User';
 import { fetchGraphql } from '../../../utils/graphql/fetch';
 import { userByIdQuery, insertUserMutation } from './graphql/queries';
-import fetch from 'node-fetch';
 
 passport.serializeUser(
   (user: User, done): void => {

@@ -1,7 +1,6 @@
 version: '3.3'
 
 volumes:
-  mongodb_restaurant:
   db_data:
   redis_data:
 
@@ -19,20 +18,6 @@ services:
         max-size: '1m'
     environment:
       ALLOW_EMPTY_PASSWORD: 'yes'
-  mongo:
-    restart: always
-    image: bitnami/mongodb:4.0
-    env_file:
-      - ./.env.dev
-    volumes:
-      - mongodb_restaurant:/bitnami
-      - ./mongodump:/dump
-    ports:
-      - 44000:27017
-    logging:
-      driver: 'json-file'
-      options:
-        max-size: '1m'
   server:
     build:
       dockerfile: ./server/Dockerfile.dev
@@ -55,7 +40,6 @@ services:
     restart: always
     volumes:
     - db_data:/var/lib/postgresql/data
-    - ./pgdump:/dump
     environment:
       POSTGRES_PASSWORD: postgrespassword
   graphql-engine:

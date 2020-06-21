@@ -25,6 +25,7 @@
     "emotion-theming": "^10.0.19",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
+    "graphql-hooks": "^4.5.0",
     "http-proxy-middleware": "^0.17.4",
     "koa-oai-mongoose": "^2.0.2",
     "mime-types": "^2.1.27",

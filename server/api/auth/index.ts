@@ -51,6 +51,8 @@ export const setupAuthAPIs = (app: Application) => {
   app.get('/api/auth/hasura-webhook', (req, res) => {
     const user = req.session?.passport?.user;
 
+    console.log({ user })
+
     if (!user) {
       res.sendStatus(401); // forbid request to gql
     } else {

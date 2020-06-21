@@ -7,7 +7,7 @@ import { hideScrollBar } from '../../styles/utils';
 
 export const UserHome: React.FC = () => {
   const { user } = React.useContext(AuthContext);
-  const [rating, setRating] = React.useState(0); // 0 means all
+  const [rating, setRating] = React.useState<number | undefined>(undefined); // undefined means all
 
   return (
     <>
@@ -22,8 +22,8 @@ export const UserHome: React.FC = () => {
         <Divider />
         <Stack isInline overflowX="scroll" whiteSpace="nowrap" className={hideScrollBar}>
           <Tag
-            onClick={() => setRating(0)}
-            variant={rating === 0 ? 'solid' : 'subtle'}
+            onClick={() => setRating(undefined)}
+            variant={rating === undefined ? 'solid' : 'subtle'}
           >
             All
           </Tag>

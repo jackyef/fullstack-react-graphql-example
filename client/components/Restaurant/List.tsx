@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useRestaurant } from './hooks/useRestaurants';
+import { useQuery } from 'graphql-hooks';
 import FullPageLoader from '../Spinner/FullPage';
 import { RestaurantCard } from './Restaurant';
 import { EmptyState } from '../State/Empty';
@@ -10,10 +10,58 @@ interface Props {
   rating?: number;
 }
 
-export const RestaurantList: React.FC<Props> = ({ ownerId, rating }) => {
-  const { state, restaurants, error } = useRestaurant({ ownerId, rating });
+const restaurantFields = `
+  address
+  description
+  id
+  imageUrl
+  name
+  rating
+  phone
+  reviewsCount
+`;
 
-  if (state === 'error') {
+const query = {
+  ownerRating: `query RestaurantList ($ownerId: String, $rating: Float) {
+    restaurants(where: {owner_id: {_eq: $ownerId}, rating: {_eq: $rating}}, order_by: {rating: asc}) {
+      ${restaurantFields}
+    }
+  }`,
+  owner: `query RestaurantList ($ownerId: String) {
+    restaurants(where: {owner_id: {_eq: $ownerId}}, order_by: {rating: asc}) {
+      ${restaurantFields}
+    }
+  }`,
+  rating: `query RestaurantList ($rating: Float) {
+    restaurants(where: {rating: {_eq: $rating}}, order_by: {rating: asc}) {
+      ${restaurantFields}
+    }
+  }`,
+  normal: `query RestaurantList {
+    restaurants(order_by: {rating: asc}) {
+      ${restaurantFields}
+    }
+  }`
+};
+
+
+export const RestaurantList: React.FC<Props> = ({ ownerId, rating }) => {
+  let usedQuery = query['normal'];
+  const ownerUndefined = typeof ownerId === 'undefined';
+  const ratingUndefined = typeof rating === 'undefined';
+
+  if (!ownerUndefined && !ratingUndefined) usedQuery = query['ownerRating'];
+  else if (!ownerUndefined) usedQuery = query['owner'];
+  else if (!ratingUndefined) usedQuery = query['rating'];
+  
+  const { loading, error, data } = useQuery(usedQuery, {
+    variables: {
+      ownerId,
+      rating,
+    }
+  })
+
+  if (error) {
     if (error instanceof Error) {
       console.error(`error`, error.toString())
       console.error(`stack`, error.stack)
@@ -22,10 +70,12 @@ export const RestaurantList: React.FC<Props> = ({ ownerId, rating }) => {
     return <ErrorState message="An error happened when trying to get restaurants list 🙇" />;
   }
 
-  if (state !== 'done') {
+  if (loading) {
     return <FullPageLoader message="Loading restaurants..." />;
   }
 
+  const restaurants = data?.restaurants ?? [];
+  
   if (restaurants.length < 1) {
     return (
       <>
@@ -36,8 +86,8 @@ export const RestaurantList: React.FC<Props> = ({ ownerId, rating }) => {
 
   return (
     <>
-      {restaurants.map((r) => {
-        return <RestaurantCard key={r._id} {...r} />;
+      {restaurants.map((r: any) => {
+        return <RestaurantCard key={r.id} {...r} />;
       })}
     </>
   );

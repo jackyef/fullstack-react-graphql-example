@@ -9,6 +9,11 @@ const devProxy = {
     pathRewrite: { '^/api': '/' },
     changeOrigin: true,
   },
+  '/v1': {
+    target: `${process.env['HASURA_HOST']}/v1`,
+    pathRewrite: { '^/v1': '/' },
+    changeOrigin: true,
+  },
 }
 
 const port = 3000;

@@ -1,7 +1,15 @@
 import React from 'react';
 import App from 'next/app';
-import { ThemeProvider, CSSReset, theme, ColorModeProvider, useColorMode, Flex } from '@chakra-ui/core';
+import {
+  ThemeProvider,
+  CSSReset,
+  theme,
+  ColorModeProvider,
+  useColorMode,
+  Flex,
+} from '@chakra-ui/core';
 import { Global } from '@emotion/core';
+import { GraphQLClient, ClientContext } from 'graphql-hooks';
 
 import mainStyles from '../styles/main';
 import { AuthProvider } from '../context/auth';
@@ -14,11 +22,15 @@ function ColorModeExample() {
   return (
     <Flex position="absolute" top="12px" right="12px">
       <Button onClick={toggleColorMode}>
-        Toggle {colorMode === "light" ? "Dark" : "Light"}
+        Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
       </Button>
     </Flex>
   );
 }
+
+const client = new GraphQLClient({
+  url: '/v1/graphql',
+});
 
 class MyApp extends App {
   render() {
@@ -28,12 +40,12 @@ class MyApp extends App {
       <ThemeProvider theme={theme}>
         <ColorModeProvider>
           <CSSReset />
-          <Global
-            styles={mainStyles}
-          />
+          <Global styles={mainStyles} />
           <ColorModeExample />
           <AuthProvider>
-            <Component {...pageProps} />
+            <ClientContext.Provider value={client}>
+              <Component {...pageProps} />
+            </ClientContext.Provider>
           </AuthProvider>
         </ColorModeProvider>
       </ThemeProvider>

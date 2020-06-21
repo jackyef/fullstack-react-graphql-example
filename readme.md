@@ -5,9 +5,10 @@
 - Next
 - React + ChakraUI
 - Express
-- MongoDB
-- Jest
+- Redis
 - GitHub as image host
+- Hasura Graphql Engine
+- Postgres
 
 ## Developing
 0. Install dependencies
@@ -21,8 +22,7 @@
 
 2. Run the backend
     ```sh
-    docker-compose up mongo # start the mongoDB server
-    docker-compose up server # start the node js server
+    docker-compose up -d # start everything up
     ```
     
     Note that if there are changes to Dockerfile.dev or new packages installed, a rebuild is necessary.
@@ -34,7 +34,9 @@
     yarn dev # start the next development build on port 3000
     ```
 
-## Dumping postgres DB
-```
-docker-compose run postgres pg_dump -U postgres -P postgrespassword -W -F t postgres > ./pgdump/backup.tar
-```
+## Stack
+- Postgres for DB
+- Hasura graphql engine for automatic GQL queries integrated with postgres
+- NodeJS server to perform authentication and image uploading to github
+- Redis for persisting session on NodeJS server restarts
+- NextJS frontend
