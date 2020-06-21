@@ -4,7 +4,10 @@ import { Application } from 'express';
 const frontendHome = `${process.env['FRONTEND_HOST']}:${process.env['FRONTEND_PORT']}` as string;
 
 export const setupAuthAPIs = (app: Application) => {
-  app.get('/api/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+  app.get(
+    '/api/auth/google',
+    passport.authenticate('google', { scope: ['profile', 'email'] }),
+  );
 
   app.get(
     '/api/auth/google/callback',
@@ -28,20 +31,36 @@ export const setupAuthAPIs = (app: Application) => {
 
     if (user) {
       const { id, role, name, email } = user;
-      
+
       res.send({
         id,
         role,
         name,
         email,
-      })
+      });
     } else {
       res.send({
         id: '',
         role: '',
         name: '',
         email: '',
-      })
+      });
     }
   });
-}
+
+  app.get('/api/auth/hasura-webhook', (req, res) => {
+    const user = req.session?.passport?.user;
+
+    if (!user) {
+      res.sendStatus(401); // forbid request to gql
+    } else {
+      res.status(200);
+      res.send({
+        'X-Hasura-User-Id': user.id,
+        'X-Hasura-Role': user.role,
+        'X-Hasura-Is-Owner': String(user.role === 'admin'),
+        // 'Cache-Control': 'max-age=600',
+      });
+    }
+  });
+};
