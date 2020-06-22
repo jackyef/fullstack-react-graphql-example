@@ -6,6 +6,7 @@ import { AuthContext } from '../context/auth';
 import FullPageLoader from '../components/Spinner/FullPage';
 import { UserHome } from '../routes/Home/User';
 import { OwnerHome } from '../routes/Home/Owner';
+import { NavBar } from '../components/NavBar';
 
 const pageMap: Record<string, React.ElementType> = {
   user: UserHome,
@@ -20,18 +21,19 @@ const Index: React.FC = () => {
 
   return (
     <Layout title="Home">
-      <Box w={480} margin="0 auto">
-      <Flex flexDirection="column" flex="1" padding={['1rem']}>
-        <PrivateRoute fallback={<FullPageLoader message="Authenticating..." />}>
-          {Page ? <Page /> : null}
-          <Divider />
-          <Heading as="h3">Log out here</Heading>
-          <Button variantColor="red" onClick={logout}>
-            Click me to logout!
-          </Button>
-        </PrivateRoute>
-      </Flex>
-      </Box>
+      <PrivateRoute fallback={<FullPageLoader message="Authenticating..." />}>
+        <Box maxWidth={480} margin="0 auto">
+          <Flex flexDirection="column" flex="1" padding={['1rem']}>
+            {Page ? <Page /> : null}
+            <Divider />
+            <Heading as="h3">Log out here</Heading>
+            <Button variantColor="red" onClick={logout}>
+              Click me to logout!
+            </Button>
+          </Flex>
+          <NavBar />
+        </Box>
+      </PrivateRoute>
     </Layout>
   );
 };

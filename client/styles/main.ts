@@ -12,6 +12,8 @@ export default css`
   }
 
   body.light-mode {
+    --bg: #fff;
+    --bg-elevated: #fff;
     --button-bg-secondary: #EDF2F7;
     --button-bg-primary: #493caa;
     --button-bg-accent: #971E8B;
@@ -24,6 +26,8 @@ export default css`
     --text-primary: #1a202c;
   }
   body.dark-mode {
+    --bg: #1A202C;
+    --bg-elevated: #232934;
     --button-bg-secondary: #313640;
     --button-bg-primary: #bfb8fc;
     --button-bg-accent: #eb94e2;
