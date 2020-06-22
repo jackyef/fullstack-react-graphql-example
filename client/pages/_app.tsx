@@ -13,20 +13,6 @@ import { GraphQLClient, ClientContext } from 'graphql-hooks';
 
 import mainStyles from '../styles/main';
 import { AuthProvider } from '../context/auth';
-import { Button } from '../components/Button';
-
-// this is just to quick testing on development
-function ColorModeExample() {
-  const { colorMode, toggleColorMode } = useColorMode();
-
-  return (
-    <Flex position="absolute" top="12px" right="12px">
-      <Button onClick={toggleColorMode}>
-        Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
-      </Button>
-    </Flex>
-  );
-}
 
 const client = new GraphQLClient({
   url: '/v1/graphql',
@@ -41,7 +27,6 @@ class MyApp extends App {
         <ColorModeProvider>
           <CSSReset />
           <Global styles={mainStyles} />
-          <ColorModeExample />
           <AuthProvider>
             <ClientContext.Provider value={client}>
               <Component {...pageProps} />
