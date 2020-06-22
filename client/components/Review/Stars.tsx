@@ -2,29 +2,27 @@ import * as React from 'react';
 import { MdStar } from 'react-icons/md';
 import { useTheme } from '@chakra-ui/core';
 
-interface Props {
-  count?: number;
+interface StarClickHandler {
+  (count: number): any;
 }
 
-const starCache: Record<number, JSX.Element[]> = {};
+interface Props {
+  count?: number;
+  onClick?: StarClickHandler;
+}
 
-export const ReviewStars: React.FC<Props> = ({ count = 0 }): JSX.Element => {
+export const ReviewStars: React.FC<Props> = ({ count = 0, onClick = () => {} }): JSX.Element => {
   const theme = useTheme();
-
-  // @ts-expect-error
-  if (starCache[count]) return starCache[count];
   
   const stars: JSX.Element[] = [];
   
   for (let i = 1; i <= count; i += 1) {
-    stars.push(<MdStar key={i} fill="var(--rating-star)" />);
+    stars.push(<MdStar key={i} fill="var(--rating-star)" onClick={() => onClick(i)} />);
   }
   
   for (let i = count + 1; i <= 5; i += 1) {
-    stars.push(<MdStar key={i} fill={theme.colors.blackAlpha[600]} />);
+    stars.push(<MdStar key={i} fill={theme.colors.blackAlpha[600]} onClick={() => onClick(i)} />);
   }
-  
-  starCache[count] = stars;
   
   // @ts-expect-error
   return stars;

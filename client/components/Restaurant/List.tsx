@@ -23,22 +23,22 @@ const restaurantFields = `
 
 const query = {
   ownerRating: `query RestaurantList ($ownerId: String, $rating: Float) {
-    restaurants(where: {owner_id: {_eq: $ownerId}, rating: {_eq: $rating}}, order_by: {rating: asc}) {
+    restaurants(where: {owner_id: {_eq: $ownerId}, rating: {_eq: $rating}}) {
       ${restaurantFields}
     }
   }`,
   owner: `query RestaurantList ($ownerId: String) {
-    restaurants(where: {owner_id: {_eq: $ownerId}}, order_by: {rating: asc}) {
+    restaurants(where: {owner_id: {_eq: $ownerId}}) {
       ${restaurantFields}
     }
   }`,
   rating: `query RestaurantList ($rating: Float) {
-    restaurants(where: {rating: {_eq: $rating}}, order_by: {rating: asc}) {
+    restaurants(where: {rating: {_eq: $rating}}) {
       ${restaurantFields}
     }
   }`,
   normal: `query RestaurantList {
-    restaurants(order_by: {rating: asc}) {
+    restaurants {
       ${restaurantFields}
     }
   }`
@@ -57,7 +57,7 @@ export const RestaurantList: React.FC<Props> = ({ ownerId, rating }) => {
   const { loading, error, data } = useQuery(usedQuery, {
     variables: {
       ownerId,
-      rating,
+      // rating,
     }
   })
 

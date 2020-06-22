@@ -1,13 +1,5 @@
 import * as React from 'react';
-import {
-  Box,
-  Flex,
-  Heading,
-  useTheme,
-  Stack,
-  Text,
-  Divider,
-} from '@chakra-ui/core';
+import { Box, Flex, Heading, Stack, Text, Divider } from '@chakra-ui/core';
 import { useManualQuery } from 'graphql-hooks';
 import { useRouter } from 'next/Router';
 import { PageWrapper as Wrapper } from '../../components/Wrapper/Page';
@@ -36,7 +28,6 @@ query RestaurantDetail ($id: uuid!) {
 `;
 
 const RestaurantDetailPage: React.FC = () => {
-  const theme = useTheme();
   const router = useRouter();
   const { id } = router.query;
   const fetched = React.useRef(false);
@@ -98,7 +89,15 @@ const RestaurantDetailPage: React.FC = () => {
           </Flex>
           <Box>
             <Text as="span" fontSize="sm" textDecoration="underline">
-              <Link href="/restaurants/[id]/reviews" as={`/restaurants/${id}/reviews`}>{`${restaurant.reviewsCount} people reviewed this place`}</Link>
+              <Link
+                href="/restaurants/[id]/reviews"
+                as={`/restaurants/${id}/reviews`}
+              >
+                <a>
+                  <strong>{restaurant.reviewsCount} people</strong> reviewed
+                  this place
+                </a>
+              </Link>
             </Text>
           </Box>
         </Flex>
