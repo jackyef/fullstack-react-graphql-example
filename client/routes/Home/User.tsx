@@ -20,7 +20,7 @@ export const UserHome: React.FC = () => {
           check them out?
         </Text>
         <Divider />
-        <Stack isInline overflowX="scroll" whiteSpace="nowrap" className={hideScrollBar}>
+        {/* <Stack isInline overflowX="scroll" whiteSpace="nowrap" className={hideScrollBar}>
           <Tag
             onClick={() => setRating(undefined)}
             variant={rating === undefined ? 'solid' : 'subtle'}
@@ -57,7 +57,7 @@ export const UserHome: React.FC = () => {
           >
             5 <MdStar fill="var(--rating-star)" />
           </Tag>
-        </Stack>
+        </Stack> */}
       </Stack>
       <RestaurantList rating={rating} />
     </>
