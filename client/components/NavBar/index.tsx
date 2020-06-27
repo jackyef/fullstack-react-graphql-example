@@ -21,7 +21,7 @@ export const NavBar: React.FC = () => {
         bottom={0}
         alignItems="center"
         justifyContent="center"
-        boxShadow="rgba(108, 114, 124, 0.16) 0px -2px 4px 0px"
+        boxShadow="var(--shadow-over)"
         backgroundColor="var(--bg-elevated)"
       >
         <Flex flex={1} flexDirection="column" alignItems="center" onClick={() => Router.push('/')}>

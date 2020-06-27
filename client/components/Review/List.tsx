@@ -52,10 +52,12 @@ export const ReviewList: React.FC<Props> = ({ restaurantId }) => {
     );
   }
 
+  console.log({ reviews });
+
   return (
     <>
       {reviews.map((r: any) => {
-        return <ReviewCard key={r.id} {...r} />;
+        return <ReviewCard key={r.id} {...r} author={r.user.name} />;
       })}
     </>
   );

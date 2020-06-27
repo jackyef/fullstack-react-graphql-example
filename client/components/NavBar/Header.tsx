@@ -35,7 +35,7 @@ export const Header: React.FC = () => {
         top={0}
         alignItems="center"
         justifyContent="space-between"
-        boxShadow="rgba(108, 114, 124, 0.16) 0px 2px 4px 0px"
+        boxShadow="var(--shadow-under)"
         backgroundColor="var(--bg-elevated)"
       >
         <MdArrowBack onClick={() => Router.back()} />

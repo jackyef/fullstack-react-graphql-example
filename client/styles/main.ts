@@ -5,6 +5,9 @@ export default css`
   body {
     font-family: Arial, sans-serif;
     font-size: 16px;
+
+    --shadow-under: rgba(108, 114, 124, 0.16) 0px 2px 4px 0px;
+    --shadow-over: rgba(108, 114, 124, 0.16) 0px -2px 4px 0px;
   }
 
   svg {
@@ -36,7 +39,7 @@ export default css`
     
     --rating-star: #FFC200;
     
-    --text-invert: #fff;
-    --text-primary: #1a202c;
+    --text-primary: #fff;
+    --text-invert: #1a202c;
   }
 `;

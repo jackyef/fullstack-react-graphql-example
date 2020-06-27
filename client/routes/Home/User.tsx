@@ -20,6 +20,7 @@ export const UserHome: React.FC = () => {
           check them out?
         </Text>
         <Divider />
+        {/* Commented this part because Hasura GQL engine doesn't support sort/filter by computed field yet */}
         {/* <Stack isInline overflowX="scroll" whiteSpace="nowrap" className={hideScrollBar}>
           <Tag
             onClick={() => setRating(undefined)}
