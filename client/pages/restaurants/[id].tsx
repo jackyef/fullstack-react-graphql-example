@@ -9,6 +9,7 @@ import { EmptyState } from '../../components/State/Empty';
 import { Image } from '../../components/Image';
 import Link from 'next/Link';
 import { ReviewStars } from '../../components/Review/Stars';
+import { MdLocationOn } from 'react-icons/md';
 
 const query = `
 query RestaurantDetail ($id: uuid!) {
@@ -106,8 +107,17 @@ const RestaurantDetailPage: React.FC = () => {
           About this place
         </Heading>
         <Text>
+          <Flex alignItems="center" as="p" fontSize="sm">
+            <MdLocationOn fill="var(--button-bg-error)" size="1.2rem" />
+            <Text as="span" marginLeft=".5rem">
+              {restaurant.address}
+            </Text>
+          </Flex>
+        </Text>
+        <Text>
           {restaurant.description || 'No description about this place'}
         </Text>
+ 
       </Stack>
     </Wrapper>
   );

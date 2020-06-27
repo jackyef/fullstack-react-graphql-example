@@ -1,13 +1,13 @@
 import * as React from 'react';
-import Layout from '../../components/Layout';
 import { Flex, Stack, Heading, Text, Divider } from '@chakra-ui/core';
 import { PrivateRoute } from '../../components/Route/Private';
 import FullPageLoader from '../../components/Spinner/FullPage';
 import { RestaurantForm } from '../../components/Restaurant/Form';
+import { PageWrapper } from '../../components/Wrapper/Page';
 
 const AddRestaurantPage: React.FC = () => {
   return (
-    <Layout title="Home">
+    <PageWrapper title="Add a new restaurant">
       <Flex flexDirection="column" flex="1" padding={['1rem']}>
         <PrivateRoute fallback={<FullPageLoader message="Authenticating..." />}>
           <Stack spacing={2}>
@@ -22,7 +22,7 @@ const AddRestaurantPage: React.FC = () => {
           </Stack>
         </PrivateRoute>
       </Flex>
-    </Layout>
+    </PageWrapper>
   );
 };
 

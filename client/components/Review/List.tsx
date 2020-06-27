@@ -52,8 +52,6 @@ export const ReviewList: React.FC<Props> = ({ restaurantId }) => {
     );
   }
 
-  console.log({ reviews });
-
   return (
     <>
       {reviews.map((r: any) => {

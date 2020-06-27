@@ -61,8 +61,6 @@ export const AddReviewButton: React.FC<Props> = ({ restaurantId }) => {
     const message = messageRef.current?.value || '';
     const date = dateRef.current?.value || '';
 
-    console.log({ message, date })
-
     if (!date) {
       showErrorToast('Visit date can not be empty!');
 
@@ -87,7 +85,7 @@ export const AddReviewButton: React.FC<Props> = ({ restaurantId }) => {
         status: 'success',
       });
 
-      Router.push(`/restaurants/${restaurantId}`);
+      Router.replace(`/restaurants/${restaurantId}`);
 
     } catch (err) {
       toast({

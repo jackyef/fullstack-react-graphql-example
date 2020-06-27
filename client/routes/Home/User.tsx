@@ -3,7 +3,6 @@ import { Heading, Divider, Text, Stack, Tag } from '@chakra-ui/core';
 import { MdStar } from 'react-icons/md';
 import { RestaurantList } from '../../components/Restaurant/List';
 import { AuthContext } from '../../context/auth';
-import { hideScrollBar } from '../../styles/utils';
 
 export const UserHome: React.FC = () => {
   const { user } = React.useContext(AuthContext);

@@ -8,17 +8,20 @@ import { EmptyState } from '../../../components/State/Empty';
 import { Heading, Stack } from '@chakra-ui/core';
 import { ReviewList } from '../../../components/Review/List';
 import { AddReviewButton } from '../../../components/Review/AddReviewButton';
+import { AuthContext } from '../../../context/auth';
 
 const query = `
 query RestaurantName ($id: uuid!) {
   restaurants_by_pk(id: $id) {
     name
+    ownerId: owner_id
   }
 }`;
 
 const RestaurantReview: React.FC = () => {
   const router = useRouter();
   const { id } = router.query;
+  const { user, isAuthenticated } = React.useContext(AuthContext);
   const fetched = React.useRef(false);
   const [triggerFetch, { data, error, loading }] = useManualQuery(query, {
     variables: {
@@ -33,7 +36,6 @@ const RestaurantReview: React.FC = () => {
     }
   }, [id, triggerFetch]);
 
-  
   if (error) {
     return (
       <PageWrapper title="Something bad happened!">
@@ -60,6 +62,7 @@ const RestaurantReview: React.FC = () => {
     );
   }
 
+  console.log({ user: user.id, owner: restaurant.ownerId })
 
   return (
     <PageWrapper title={`Reviews for ${restaurant.name}`}>
@@ -67,9 +70,11 @@ const RestaurantReview: React.FC = () => {
         <Heading>Reviews for {restaurant.name}</Heading>
         <ReviewList restaurantId={id as string} />
       </Stack>
-      <AddReviewButton restaurantId={id as string} /> 
+      {isAuthenticated && user.id !== restaurant.ownerId ? (
+        <AddReviewButton restaurantId={id as string} />
+      ) : null}
     </PageWrapper>
-  )
-}
+  );
+};
 
 export default RestaurantReview;
