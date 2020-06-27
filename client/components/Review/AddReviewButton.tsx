@@ -68,12 +68,14 @@ export const AddReviewButton: React.FC<Props> = ({ restaurantId }) => {
     }
 
     try {
-      const res = await addReview({ variables: {
-        message,
-        visittedAt: new Date(date),
-        restaurantId,
-        rating,
-      }})
+      const res = await addReview({
+        variables: {
+          message,
+          visittedAt: new Date(date),
+          restaurantId,
+          rating,
+        },
+      });
 
       if (res.error) {
         throw new Error('Failed to add new restaurant!');
@@ -85,8 +87,7 @@ export const AddReviewButton: React.FC<Props> = ({ restaurantId }) => {
         status: 'success',
       });
 
-      Router.replace(`/restaurants/${restaurantId}`);
-
+      Router.replace('/restaurants/[id]', `/restaurants/${restaurantId}`);
     } catch (err) {
       toast({
         title: 'Server Error',
@@ -96,7 +97,7 @@ export const AddReviewButton: React.FC<Props> = ({ restaurantId }) => {
         duration: 5000,
       });
     }
-  }
+  };
 
   return (
     <>
@@ -132,7 +133,9 @@ export const AddReviewButton: React.FC<Props> = ({ restaurantId }) => {
                 <FormLabel htmlFor="visitDate">When was your visit?</FormLabel>
                 <Input id="visitDate" type="date" ref={dateRef} />
               </FormControl>
-              <Button variantColor="primary" onClick={handleSubmit}>Add your review</Button>
+              <Button variantColor="primary" onClick={handleSubmit}>
+                Add your review
+              </Button>
             </Stack>
           </DrawerBody>
         </DrawerContent>

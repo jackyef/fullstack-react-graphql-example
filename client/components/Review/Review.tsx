@@ -24,6 +24,7 @@ export const ReviewCard: React.FC<Props> = ({
       padding={theme.space[4]}
       flexDirection="column"
       boxShadow="var(--shadow-under)"
+      marginBottom={theme.space[4]}
     >
       <Stack spacing={2}>
         <Flex flexDirection="column">
