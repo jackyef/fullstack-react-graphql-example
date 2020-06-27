@@ -15,3 +15,7 @@ Run postgres and graphql-engine on port 8080, then:
 hasura migrate apply
 hasura metadata apply
 ```
+
+## Notes
+Unfortunately, due to some issue, the generated `.sql` migration file can't be just used as-is. We need to re-order stuffs around to get it working.
+Detail: https://github.com/hasura/graphql-engine/issues/5194

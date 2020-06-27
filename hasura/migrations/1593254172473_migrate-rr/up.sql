@@ -3,21 +3,31 @@ CREATE TABLE public.restaurants (
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
     name text NOT NULL,
-    description text NOT NULL,
-    address text NOT NULL,
-    phone text NOT NULL,
-    rating real DEFAULT 0 NOT NULL,
-    reviews_count integer DEFAULT 0 NOT NULL,
+    description text,
+    address text,
+    phone text,
     owner_id text NOT NULL,
     image_url text
 );
+
+CREATE FUNCTION public.set_current_timestamp_updated_at() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+  _new record;
+BEGIN
+  _new := NEW;
+  _new."updated_at" = NOW();
+  RETURN _new;
+END;
+$$;
 CREATE TABLE public.reviews (
     id uuid DEFAULT public.gen_random_uuid() NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
     message text NOT NULL,
     rating integer NOT NULL,
-    visitted_at timestamp with time zone DEFAULT now() NOT NULL,
+    visitted_at date DEFAULT now() NOT NULL,
     user_id text NOT NULL,
     restaurant_id uuid NOT NULL
 );
@@ -59,3 +69,18 @@ ALTER TABLE ONLY public.reviews
     ADD CONSTRAINT reviews_restaurant_id_fkey FOREIGN KEY (restaurant_id) REFERENCES public.restaurants(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE ONLY public.reviews
     ADD CONSTRAINT reviews_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+CREATE FUNCTION public.average_restaurant_review(restaurant_row public.restaurants) RETURNS numeric
+    LANGUAGE sql STABLE
+    AS $$
+SELECT AVG(r.rating)
+FROM reviews r
+WHERE r.restaurant_id = restaurant_row.id
+$$;
+CREATE FUNCTION public.restaurant_review_count(restaurant_row public.restaurants) RETURNS bigint
+    LANGUAGE sql STABLE
+    AS $$
+SELECT COUNT(r.rating)
+FROM reviews r
+WHERE r.restaurant_id = restaurant_row.id
+$$;
